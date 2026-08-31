@@ -36,3 +36,13 @@ def make_generator_model():
     assert model.output_shape == (None, 28, 28, 1)
 
     return model
+
+# Using the untrained generator to generate an image from random noise
+
+generator = make_generator_model()
+
+noise = tf.random.normal([1, 100])
+generated_image = generator(noise, training = False)
+
+plt.imshow(generated_image[0, :, :, 0], cmap='gray')
+
