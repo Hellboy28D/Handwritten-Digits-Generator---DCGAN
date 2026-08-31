@@ -37,8 +37,8 @@ def make_generator_model():
 
     return model
 
-# Using the untrained generator to generate an image from random noise
 
+# Using the untrained generator to generate an image from random noise
 generator = make_generator_model()
 
 noise = tf.random.normal([1, 100])
@@ -46,8 +46,8 @@ generated_image = generator(noise, training = False)
 
 plt.imshow(generated_image[0, :, :, 0], cmap='gray')
 
-# Discriminator
 
+# Discriminator
 def make_discriminator_model():
     model = tf.keras.Sequential()
     model.add(layers.Conv2D(64,(5,5), strides=(2,2), padding = 'same',
@@ -65,3 +65,16 @@ def make_discriminator_model():
 
     return model
 
+
+# Using the untrained discriminator to predict whether an imagge is real or fake
+discriminator = make_discriminator_model()
+decision = discriminator(generated_image)
+print(decision)
+
+
+# *** Loss and Optimizer ***
+# This method returns a helper function to compute cross entropy loss
+cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits = True)
+
+
+# Dicrimnator Loss
